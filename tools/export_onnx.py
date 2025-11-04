@@ -71,7 +71,7 @@ def main():
     model = exp.get_model()
     if args.ckpt is None:
         file_name = os.path.join(exp.output_dir, args.experiment_name)
-        ckpt_file = os.path.join(file_name, "best_ckpt.pth")
+        ckpt_file = os.path.join(file_name, "best_ckpt.pth", weights_only=False)
     else:
         ckpt_file = args.ckpt
 
@@ -88,7 +88,7 @@ def main():
     logger.info("loading checkpoint done.")
     dummy_input = torch.randn(args.batch_size, 3, exp.test_size[0], exp.test_size[1])
 
-    torch.onnx._export(
+    torch.onnx.export(
         model,
         dummy_input,
         args.output_name,
