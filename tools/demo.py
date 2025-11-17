@@ -16,7 +16,7 @@ from yolox.data.datasets import COCO_CLASSES
 from yolox.exp import get_exp
 from yolox.utils import fuse_model, get_model_info, postprocess, vis
 
-IMAGE_EXT = [".jpg", ".jpeg", ".webp", ".bmp", ".png"]
+IMAGE_EXT = [".jpg", ".jpeg", ".webp", ".bmp", ".png", ".JPG"]
 
 
 def make_parser():
@@ -280,8 +280,7 @@ def main(exp, args):
         else:
             ckpt_file = args.ckpt
         logger.info("loading checkpoint")
-        ckpt = torch.load(ckpt_file, map_location="cpu")
-        # load the model state dict
+        ckpt = torch.load(ckpt_file, map_location="cpu", weights_only=False)
         model.load_state_dict(ckpt["model"])
         logger.info("loaded checkpoint done.")
 
